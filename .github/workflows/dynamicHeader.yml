@@ -1,0 +1,12 @@
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  dynamic-img-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run a script
+        run: echo "This runs every 6 hours"
