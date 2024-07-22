@@ -1,0 +1,1 @@
+[![.github/workflows/dynamicHeader.yml](https://github.com/Acanixz/dynamicHeader/actions/workflows/dynamicHeader.yml/badge.svg?event=schedule)](https://github.com/Acanixz/dynamicHeader/actions/workflows/dynamicHeader.yml)
