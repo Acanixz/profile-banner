@@ -29,8 +29,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'Hérick Bittencourt'
+          git config --global user.email 'acanixz@users.noreply.github.com'
           git add main.png
           git commit -m "Update main.png with ${{ env.image }}"
           git push
