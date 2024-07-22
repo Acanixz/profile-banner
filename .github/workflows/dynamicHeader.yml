@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 */3 * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -14,11 +14,11 @@ jobs:
         id: determine-image
         run: |
           hour=$(date +%H)
-          if [ $((hour % 24)) -lt 6 ]; then
+          if [ $hour -ge 3 ] && [ $hour -lt 9 ]; then
             echo "image=1.png" >> $GITHUB_ENV
-          elif [ $((hour % 24)) -lt 12 ]; then
+          elif [ $hour -ge 9 ] && [ $hour -lt 15 ]; then
             echo "image=2.png" >> $GITHUB_ENV
-          elif [ $((hour % 24)) -lt 18 ]; then
+          elif [ $hour -ge 15 ] && [ $hour -lt 21 ]; then
             echo "image=3.png" >> $GITHUB_ENV
           else
             echo "image=4.png" >> $GITHUB_ENV
