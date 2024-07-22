@@ -1,6 +1,7 @@
 on:
   schedule:
     - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   dynamic-img-update:
@@ -8,5 +9,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Run a script
-        run: echo "This runs every 6 hours"
+
+      - name: Determine which image to use
+        id: determine-image
+        run: |
+          hour=$(date +%H)
+          if [ $((hour % 24)) -lt 6 ]; then
+            echo "image=1.png" >> $GITHUB_ENV
+          elif [ $((hour % 24)) -lt 12 ]; then
+            echo "image=2.png" >> $GITHUB_ENV
+          elif [ $((hour % 24)) -lt 18 ]; then
+            echo "image=3.png" >> $GITHUB_ENV
+          else
+            echo "image=4.png" >> $GITHUB_ENV
+          fi
+
+      - name: Copy image to root and rename
+        run: cp -f images/${{ env.image }} main.png
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add main.png
+          git commit -m "Update main.png with ${{ env.image }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
